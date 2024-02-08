@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Battery
   - Source
+  - Mirror
   layers:
   - Default
   - TransparentFX

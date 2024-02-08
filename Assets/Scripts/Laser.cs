@@ -3,14 +3,19 @@ using UnityEngine.VFX;
 
 public class Laser : MonoBehaviour
 {
+    private bool active = false;
+
     private VisualEffect vfx;
 
-    private bool active = false;
+    private float vfxSize;
+    private float baseVfxLength = 1.0f;
+
+    private bool batteryOn;
 
     private RaycastHit hit;
     private Laser currentHit;
-
-    private float vfxSize;
+    private float laserLength;
+    
     private void Start()
     {
         if(transform.gameObject.CompareTag("Source")) active = true;
@@ -21,43 +26,45 @@ public class Laser : MonoBehaviour
     }
     private void Update()
     {
-        if (active) PlayLaser(); else StopLaser();
-
-        Vector3 direction = new Vector3(0,1,0);
-
-        if (Physics.Raycast(transform.position, transform.TransformDirection(direction), out hit, Mathf.Infinity) && active)
+        if (Physics.Raycast(transform.position, transform.TransformDirection(new Vector3(0, 1, 0)), out hit, Mathf.Infinity) && active)
         {
-            Debug.DrawRay(transform.position, transform.TransformDirection(direction) * 1000);
+            laserLength = hit.distance / 3.0f;
 
-            if (hit.collider.transform.gameObject.CompareTag("Battery")){
+            if (hit.collider.transform.gameObject.CompareTag("Battery"))
+            {
+                batteryOn = true;
                 hit.transform.gameObject.GetComponent<CompleteLevel>().Complete();
             }
 
-            currentHit = hit.transform.gameObject.GetComponent<Laser>();
-
-            if (currentHit != null)
+            if (hit.collider.transform.gameObject.CompareTag("Mirror"))
             {
-                currentHit.active = true;
+                currentHit = hit.transform.gameObject.GetComponent<Laser>();
+                if (currentHit != null) currentHit.active = true;
+            }
+            else
+            {
+                if (currentHit != null) currentHit.active = false; currentHit = null;
             }
         }            
         else
         {
-            if (currentHit != null)
-            {
-                currentHit.active = false;
-            }
+            batteryOn = false;
+            if (currentHit != null) currentHit.active = false; currentHit = null;
         }
+
+        if (active) PlayLaser(currentHit != null ? laserLength : batteryOn ? laserLength : baseVfxLength); else StopLaser();
 
     }
     public void RotateMirror()
     {
         transform.Rotate(0,0,90);
     }
-    public void PlayLaser()
+    private void PlayLaser(float length)
     {
+        vfx.SetFloat("Length", length);
         vfx.SetFloat("Size", vfxSize);
     }
-    public void StopLaser()
+    private void StopLaser()
     {
         vfx.SetFloat("Size", 0);
     }
