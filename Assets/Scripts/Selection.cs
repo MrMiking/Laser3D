@@ -8,11 +8,12 @@ public class Selection : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && !EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out hit))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !EventSystem.current.IsPointerOverGameObject() 
+            && Physics.Raycast(ray, out hit) && !hit.transform.gameObject.CompareTag("Battery"))
         {
             if (hit.transform.gameObject.CompareTag("Mirror"))
             {
-                hit.transform.gameObject.GetComponent<Laser>().RotateMirror();
+                hit.transform.gameObject.GetComponentInChildren<Laser>().RotateMirror();
             }
             else
             {

@@ -38,7 +38,7 @@ public class Laser : MonoBehaviour
 
             if (hit.collider.transform.gameObject.CompareTag("Mirror"))
             {
-                currentHit = hit.transform.gameObject.GetComponent<Laser>();
+                currentHit = hit.transform.gameObject.GetComponentInChildren<Laser>();
                 if (currentHit != null) currentHit.active = true;
             }
             else
@@ -57,7 +57,7 @@ public class Laser : MonoBehaviour
     }
     public void RotateMirror()
     {
-        transform.Rotate(0,0,90);
+        gameObject.GetComponentInChildren<Transform>().Rotate(0,0,90);
     }
     private void PlayLaser(float length)
     {
