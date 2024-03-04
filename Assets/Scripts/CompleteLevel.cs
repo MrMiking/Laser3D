@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class CompleteLevel : MonoBehaviour
 {
@@ -13,9 +12,5 @@ public class CompleteLevel : MonoBehaviour
     public void Complete()
     {
         endPanel.SetActive(true);
-    }
-    public void NextLevel()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

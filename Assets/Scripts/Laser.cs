@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 using UnityEngine.VFX;
 
 public class Laser : MonoBehaviour
@@ -28,6 +30,7 @@ public class Laser : MonoBehaviour
     {
         if (Physics.Raycast(transform.position, transform.TransformDirection(new Vector3(0, 1, 0)), out hit, Mathf.Infinity) && active)
         {
+
             laserLength = hit.distance / 3.0f;
 
             if (hit.collider.transform.gameObject.CompareTag("Battery"))
@@ -39,7 +42,7 @@ public class Laser : MonoBehaviour
             if (hit.collider.transform.gameObject.CompareTag("Mirror"))
             {
                 currentHit = hit.transform.gameObject.GetComponentInChildren<Laser>();
-                if (currentHit != null) currentHit.active = true;
+                StartCoroutine(Wait());
             }
             else
             {
@@ -59,13 +62,21 @@ public class Laser : MonoBehaviour
     {
         gameObject.GetComponentInChildren<Transform>().Rotate(0,0,90);
     }
-    private void PlayLaser(float length)
+    void PlayLaser(float length)
     {
         vfx.SetFloat("Length", length);
         vfx.SetFloat("Size", vfxSize);
     }
     private void StopLaser()
     {
+        vfx.SetFloat("Length", 0);
         vfx.SetFloat("Size", 0);
+    }
+
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(0.05f);
+
+        if (currentHit != null) currentHit.active = true;
     }
 }
