@@ -1,13 +1,19 @@
 using System.Collections;
+using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.UIElements;
 using UnityEngine.VFX;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public class Laser : MonoBehaviour
 {
+    public List<int> bannedRotation;
+
     private bool active = false;
 
     private VisualEffect vfx;
+    private Transform mesh;
+    private Transform mirrorCorner;
 
     private float vfxSize;
     private float baseVfxLength = 1.0f;
@@ -17,31 +23,40 @@ public class Laser : MonoBehaviour
     private RaycastHit hit;
     private Laser currentHit;
     private float laserLength;
-    
+
     private void Start()
     {
-        if(transform.gameObject.CompareTag("Source")) active = true;
+        if (transform.gameObject.CompareTag("Source"))
+        {
+            active = true;
+        }
+        else
+        {
+            mirrorCorner = transform.Find("MirrorCorner");
+        }
 
         vfx = GetComponentInChildren<VisualEffect>();
+        mesh = transform.Find("Mesh");
 
         vfxSize = vfx.GetFloat("Size");
     }
     private void Update()
     {
-        if (Physics.Raycast(transform.position, transform.TransformDirection(new Vector3(0, 1, 0)), out hit, Mathf.Infinity) && active)
+        if(bannedRotation.Count == 3 || )
         {
+            
+        }
 
-            laserLength = hit.distance / 3.0f;
+        Debug.DrawRay(vfx.transform.position, vfx.transform.TransformDirection(new Vector3(0, 1, 0)) * 1000, Color.yellow);
 
-            if (hit.collider.transform.gameObject.CompareTag("Battery"))
+        if (Physics.Raycast(vfx.transform.position, vfx.transform.TransformDirection(new Vector3(0, 1, 0)), out hit, Mathf.Infinity) && active)
+        {
+            
+            laserLength = (hit.distance + 0.2f) / 3.0f;
+
+            if (hit.collider.transform.gameObject.CompareTag("MirrorCollider"))
             {
-                batteryOn = true;
-                hit.transform.gameObject.GetComponent<CompleteLevel>().Complete();
-            }
-
-            if (hit.collider.transform.gameObject.CompareTag("Mirror"))
-            {
-                currentHit = hit.transform.gameObject.GetComponentInChildren<Laser>();
+                currentHit = hit.transform.gameObject.GetComponentInParent<Laser>();
                 StartCoroutine(Wait());
             }
             else
@@ -60,7 +75,8 @@ public class Laser : MonoBehaviour
     }
     public void RotateMirror()
     {
-        gameObject.GetComponentInChildren<Transform>().Rotate(0,0,90);
+        mesh.Rotate(0, 0, 90);
+        mirrorCorner.Rotate(0, 0, 90);
     }
     void PlayLaser(float length)
     {
@@ -69,7 +85,6 @@ public class Laser : MonoBehaviour
     }
     private void StopLaser()
     {
-        vfx.SetFloat("Length", 0);
         vfx.SetFloat("Size", 0);
     }
 
