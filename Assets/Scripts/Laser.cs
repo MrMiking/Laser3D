@@ -42,9 +42,15 @@ public class Laser : MonoBehaviour
     }
     private void Update()
     {
-        if(bannedRotation.Count == 3 || )
+        if(bannedRotation.Count == 3 && ( mesh.eulerAngles.z.Equals(bannedRotation[0]) ||
+            mesh.eulerAngles.z.Equals(bannedRotation[1]) ||
+            mesh.eulerAngles.z.Equals(bannedRotation[2])))
         {
-            
+            if (!transform.gameObject.CompareTag("Source")) mesh.Find("Corner").localScale = new Vector3(0, 0, 0);
+        }
+        else
+        {
+            if (!transform.gameObject.CompareTag("Source")) mesh.Find("Corner").localScale = new Vector3(100, 100, 100);
         }
 
         Debug.DrawRay(vfx.transform.position, vfx.transform.TransformDirection(new Vector3(0, 1, 0)) * 1000, Color.yellow);
@@ -76,7 +82,7 @@ public class Laser : MonoBehaviour
     public void RotateMirror()
     {
         mesh.Rotate(0, 0, 90);
-        mirrorCorner.Rotate(0, 0, 90);
+        if(mirrorCorner != null) mirrorCorner.Rotate(0, 0, 90);
     }
     void PlayLaser(float length)
     {
