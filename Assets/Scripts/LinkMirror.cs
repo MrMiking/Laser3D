@@ -12,10 +12,6 @@ public class LinkMirror : MonoBehaviour
     {
         linkPosition = transform.position;
         linkedMirrorPosition = linkedMirror.transform.position;
-
-        if (linkedMirror != null) this.AddComponent<BoxCollider>();
-        transform.localScale = linkedMirror.transform.localScale;
-        transform.rotation = linkedMirror.transform.rotation;
     }
 
     private void Update()

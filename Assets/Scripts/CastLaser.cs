@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -22,10 +23,10 @@ public class CastLaser : MonoBehaviour
 
     void Update()
     {
-        if(transform.CompareTag("Source")) DrawRaycast(transform.position, transform.forward);
+        if(transform.CompareTag("Source")) DrawRaycast(transform.position, transform.forward, this);
     }
 
-    private void DrawRaycast(Vector3 position, Vector3 direction)
+    private void DrawRaycast(Vector3 position, Vector3 direction, CastLaser pastHit)
     {
         startingPosition = position;
 
@@ -34,6 +35,8 @@ public class CastLaser : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 100))
         {
+            laserLength = hit.distance / 2.0f;
+
             direction = Vector3.Reflect(direction, hit.normal);
             position = hit.point;
 
@@ -46,35 +49,44 @@ public class CastLaser : MonoBehaviour
                 linkMirror = hit.transform.GetComponent<LinkMirror>();
                 currentHit = hit.transform.GetComponent<LinkMirror>().linkedMirror.GetComponent<CastLaser>();
             }
+
+            if (currentHit != null && pastHit != currentHit) currentHit.PlayLaser();
         }
         else
         {
             position += direction * 100;
+
+            if (currentHit != null && pastHit != currentHit) currentHit.StopLaser();
         }
 
         Debug.DrawLine(startingPosition, position, raycastColor);
 
-        if (linkMirror != null && currentHit != null)
-        {
-            currentHit.GetComponent<CastLaser>().DrawRaycast(position + currentHit.transform.position - linkMirror.transform.position, direction);
-        }
-        else if(currentHit != null)
-        {
-            currentHit.GetComponent<CastLaser>().DrawRaycast(position, direction);
-        }
+        currentLaser.transform.position = startingPosition;
+        currentLaser.transform.LookAt(position);
 
-        /*currentLaser.transform.position = startingPosition;
-        currentLaser.transform.LookAt(position);*/
+        if (transform.CompareTag("Source")) PlayLaser();
+
+        if (currentHit != null && pastHit != currentHit)
+        {
+            if (linkMirror != null)
+            {
+                currentHit.GetComponent<CastLaser>().DrawRaycast(position + currentHit.transform.position - linkMirror.transform.position, direction, this);
+            }
+            else 
+            {
+                currentHit.GetComponent<CastLaser>().DrawRaycast(position, direction, this);
+            }
+        }
     }
 
-    /*private void PlayLaser()
+    private void PlayLaser()
     {
-        currentLaser.GetComponentInChildren<VisualEffect>().SetFloat("Length", laserLength <= 1.5f ? 1.5f : laserLength);
+        currentLaser.GetComponentInChildren<VisualEffect>().SetFloat("Length", laserLength == 0 ? 1 : laserLength);
         currentLaser.SetActive(true);
     }
 
     private void StopLaser()
     {
         currentLaser.SetActive(false);
-    }*/
+    }
 }
