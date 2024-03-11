@@ -4,10 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Battery
   - Source
-  - MirrorCollider
-  - SelectCollider
+  - Mirror
+  - LaserEntry
   layers:
   - Default
   - TransparentFX
