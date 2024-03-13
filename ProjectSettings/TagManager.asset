@@ -6,12 +6,14 @@ TagManager:
   tags:
   - Source
   - Mirror
-  - LaserEntry
+  - DoubleMirror
+  - ReliefMirror
+  - Portal
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Mirror
+  - Selectable
   - Water
   - UI
   - 

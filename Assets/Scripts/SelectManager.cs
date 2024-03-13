@@ -3,19 +3,26 @@ using UnityEngine.EventSystems;
 
 public class Selection : MonoBehaviour
 {
+    [SerializeField] private LayerMask layerMask;
+
     private RaycastHit hit;
     private void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && !EventSystem.current.IsPointerOverGameObject()
-            && Physics.Raycast(ray, out hit))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out hit))
         {
-            if (hit.transform.gameObject.CompareTag("Mirror"))
+            hit.transform.gameObject.GetComponentInParent<RotateManager>().RotateMirror();
+
+            if (hit.transform.CompareTag("Mirror"))
             {
-                hit.transform.gameObject.GetComponent<RotateManager>().RotateMirror();
+                hit.transform.GetComponentInParent<CastLaser>().StopLaser();
             }
-            else return;
+
+            if (hit.transform.CompareTag("DoubleMirror"))
+            {
+                hit.transform.GetComponentInParent<DoubleMirror>().ResetDoubleMirror();
+            }
         }
     }
 }

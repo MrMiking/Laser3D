@@ -1,16 +1,20 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 using UnityEngine.VFX;
 
 public class CastLaser : MonoBehaviour
 {
+    [SerializeField] private LayerMask layerMask;
     [SerializeField] private GameObject laser;
 
     public Color raycastColor;
 
     private GameObject currentLaser;
     private CastLaser currentHit;
+
     private LinkMirror linkMirror;
+    private LinkMirror linkPortal;
 
     private Vector3 startingPosition;
 
@@ -23,7 +27,11 @@ public class CastLaser : MonoBehaviour
 
     void Update()
     {
-        if(transform.CompareTag("Source")) DrawRaycast(transform.position, transform.forward, this);
+        if (transform.CompareTag("Source"))
+        {
+            PlayLaser();
+            DrawRaycast(transform.position, transform.forward, this);
+        }
     }
 
     private void DrawRaycast(Vector3 position, Vector3 direction, CastLaser pastHit)
@@ -33,7 +41,7 @@ public class CastLaser : MonoBehaviour
         Ray ray = new Ray(position, direction);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 100))
+        if (Physics.Raycast(ray, out hit, 100, layerMask))
         {
             laserLength = hit.distance / 2.0f;
 
@@ -42,21 +50,33 @@ public class CastLaser : MonoBehaviour
 
             if (hit.collider.transform.CompareTag("Mirror"))
             {
+                if(hit.transform.GetComponent<CastLaser>() != currentHit)
+                {
+                    if (currentHit != null && pastHit != currentHit) 
+                    {
+                        currentHit.StopLaser();
+                    }
+                }
                 currentHit = hit.transform.GetComponent<CastLaser>();
             }
-            if (hit.collider.transform.CompareTag("LaserEntry"))
+            if (hit.collider.transform.CompareTag("ReliefMirror"))
             {
                 linkMirror = hit.transform.GetComponent<LinkMirror>();
-                currentHit = hit.transform.GetComponent<LinkMirror>().linkedMirror.GetComponent<CastLaser>();
+                currentHit = linkMirror.linkedMirror.GetComponent<CastLaser>();
+            }
+            if (hit.collider.transform.CompareTag("Portal"))
+            {
+                linkPortal = hit.transform.GetComponent<LinkMirror>();
+                currentHit = linkPortal.linkedMirror.GetComponent<CastLaser>();
             }
 
-            if (currentHit != null && pastHit != currentHit) currentHit.PlayLaser();
+            currentHit.transform.GetComponent<CastLaser>().PlayLaser();
         }
         else
         {
             position += direction * 100;
 
-            if (currentHit != null && pastHit != currentHit) currentHit.StopLaser();
+            if (currentHit != null) currentHit.StopLaser();
         }
 
         Debug.DrawLine(startingPosition, position, raycastColor);
@@ -64,17 +84,21 @@ public class CastLaser : MonoBehaviour
         currentLaser.transform.position = startingPosition;
         currentLaser.transform.LookAt(position);
 
-        if (transform.CompareTag("Source")) PlayLaser();
-
         if (currentHit != null && pastHit != currentHit)
         {
             if (linkMirror != null)
             {
-                currentHit.GetComponent<CastLaser>().DrawRaycast(position + currentHit.transform.position - linkMirror.transform.position, direction, this);
+                currentHit.DrawRaycast(
+                    position + currentHit.transform.position - linkMirror.transform.position, direction, this);
+            }
+            if(linkPortal != null)
+            {
+                currentHit.DrawRaycast(
+                    position + currentHit.transform.position - linkPortal.transform.position, currentHit.transform.forward, this);
             }
             else 
             {
-                currentHit.GetComponent<CastLaser>().DrawRaycast(position, direction, this);
+                currentHit.DrawRaycast(position, direction, this);
             }
         }
     }
@@ -85,7 +109,7 @@ public class CastLaser : MonoBehaviour
         currentLaser.SetActive(true);
     }
 
-    private void StopLaser()
+    public void StopLaser()
     {
         currentLaser.SetActive(false);
     }
