@@ -43,33 +43,45 @@ public class LaserSource : MonoBehaviour
             direction = Vector3.Reflect(direction, hit.normal);
             position = hit.point;
 
-            currentHit = hit.transform.gameObject;
+            if (hit.transform.CompareTag("Mirror"))
+            {
+                if (currentHit != null && currentHit != hit.transform.gameObject)
+                {
+                    currentHit.GetComponent<Mirror>().StopLaser();
+                }
+
+                currentHit = hit.transform.gameObject;
+
+                currentHit.GetComponent<Mirror>().PlayLaser();
+            }
+            if (hit.transform.CompareTag("Border"))
+            {
+                if (currentHit != null && currentHit.transform.CompareTag("Mirror"))
+                {
+                    currentHit.GetComponent<Mirror>().StopLaser();
+                }
+                currentHit = null;
+            }
         }
         else
         {
-            if(currentHit != null)
+            if (currentHit != null && currentHit.transform.CompareTag("Mirror"))
             {
                 currentHit.GetComponent<Mirror>().StopLaser();
-                currentHit = null;
+
             }
             position += direction * 100;
         }
 
         Debug.DrawLine(startingPosition, position, Color.blue);
 
-        UpdateLaser(startingPosition, position);
-
-        if (currentHit != null)
-        {
-            currentHit.GetComponent<Mirror>().CastMirrorLaser(position, direction);
-            currentHit.GetComponent<Mirror>().PlayLaser();
-        }
-    }
-
-    private void UpdateLaser(Vector3 startingPosition, Vector3 position)
-    {
         activeLaser.GetComponentInChildren<VisualEffect>().SetFloat("Length", currentHit == null ? 1 : laserLength);
         activeLaser.transform.position = startingPosition;
         activeLaser.transform.LookAt(position);
+
+        if (currentHit != null && currentHit.transform.CompareTag("Mirror"))
+        {
+            currentHit.GetComponent<Mirror>().CastMirrorLaser(position, direction);
+        }
     }
 }

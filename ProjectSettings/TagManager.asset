@@ -9,6 +9,7 @@ TagManager:
   - DoubleMirror
   - ReliefMirror
   - Portal
+  - Border
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - Selectable
   - Water
   - UI
-  - 
+  - Border
   - 
   - 
   - 
