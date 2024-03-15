@@ -17,10 +17,10 @@ MonoBehaviour:
   categories: []
   uiBounds:
     serializedVersion: 2
-    x: 596
+    x: 515
     y: -190
-    width: 2815
-    height: 1988
+    width: 2896
+    height: 2283
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -138,7 +138,7 @@ VisualEffectResource:
   m_Infos:
     m_RendererSettings:
       motionVectorGenerationMode: 0
-      shadowCastingMode: 1
+      shadowCastingMode: 0
       rayTracingMode: 0
       receiveShadows: 0
       reflectionProbeUsage: 0
@@ -237,10 +237,10 @@ MonoBehaviour:
     - _QueueOffset
     - _QueueControl
     m_PropertyValues:
-    - 1
+    - 0
     - 1
     - 2
-    - 0
+    - 1
     - 5
     - 1
     - 0
@@ -1208,9 +1208,9 @@ MonoBehaviour:
   - link:
     - context: {fileID: 8926484042661614609}
       slotIndex: 0
-    - context: {fileID: 8926484042661614857}
-      slotIndex: 0
     - context: {fileID: 8926484042661614719}
+      slotIndex: 0
+    - context: {fileID: 8926484042661614857}
       slotIndex: 0
   integration: 0
   angularIntegration: 0
@@ -1304,7 +1304,7 @@ MonoBehaviour:
     - _QueueOffset
     - _QueueControl
     m_PropertyValues:
-    - 1
+    - 0
     - 1
     - 2
     - 1
@@ -1348,7 +1348,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Color, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"r":1.2965800762176514,"g":2.629122495651245,"b":8.866935729980469,"a":1.0}'
+      m_SerializableObject: '{"r":4.0,"g":0.043140050023794177,"b":0.0,"a":1.0}'
     m_Space: -1
   m_Property:
     name: _Color
@@ -1929,8 +1929,8 @@ MonoBehaviour:
   - {fileID: 8926484042661614695}
   - {fileID: 8926484042661614717}
   - {fileID: 8926484042661614609}
-  - {fileID: 8926484042661614857}
   - {fileID: 8926484042661614719}
+  - {fileID: 8926484042661614857}
   dataType: 0
   capacity: 32
   stripCapacity: 16
@@ -2011,9 +2011,31 @@ MonoBehaviour:
     type: 3}
   materialSettings:
     m_PropertyNames:
+    - _CastShadows
+    - _Surface
+    - _Blend
+    - _AlphaClip
+    - _SrcBlend
+    - _DstBlend
+    - _ZWrite
+    - _ZWriteControl
+    - _ZTest
+    - _Cull
+    - _AlphaToMask
     - _QueueOffset
     - _QueueControl
     m_PropertyValues:
+    - 0
+    - 1
+    - 0
+    - 1
+    - 5
+    - 10
+    - 0
+    - 0
+    - 4
+    - 2
+    - 0
     - 0
     - 0
   MeshCount: 1
@@ -2047,7 +2069,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Color, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"r":0.012500000186264515,"g":0.002500000176951289,"b":0.0,"a":1.0}'
+      m_SerializableObject: '{"r":0.0031250000465661289,"g":0.0006250000442378223,"b":0.0,"a":1.0}'
     m_Space: -1
   m_Property:
     name: _Color
@@ -3055,7 +3077,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Color, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"r":6.816407680511475,"g":7.999999046325684,"b":0.3769630789756775,"a":1.0}'
+      m_SerializableObject: '{"r":85.44501495361328,"g":1.864914059638977,"b":0.0,"a":1.0}'
     m_Space: -1
   m_Property:
     name: _Color
@@ -5552,7 +5574,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"x":8.344239234924317,"y":8.344239234924317,"z":8.344239234924317}'
+      m_SerializableObject: '{"x":44.560855865478519,"y":7.224493026733398,"z":0.0}'
     m_Space: -1
   m_Property:
     name: Color
@@ -5749,7 +5771,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Gradient, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"colorKeys":[{"color":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"time":0.0},{"color":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":0.0,"time":0.0},{"alpha":1.0,"time":0.10000763088464737},{"alpha":1.0,"time":0.800000011920929},{"alpha":0.0,"time":1.0}],"gradientMode":0}'
+      m_SerializableObject: '{"colorKeys":[{"color":{"r":1.0,"g":0.0,"b":0.0,"a":1.0},"time":0.0},{"color":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":0.0,"time":0.0},{"alpha":1.0,"time":0.10000763088464737},{"alpha":1.0,"time":0.800000011920929},{"alpha":0.0,"time":1.0}],"gradientMode":0}'
     m_Space: -1
   m_Property:
     name: Color
@@ -5939,7 +5961,7 @@ MonoBehaviour:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
-  m_UIPosition: {x: 596, y: 1549}
+  m_UIPosition: {x: 515, y: 1844}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots: []
@@ -6206,7 +6228,7 @@ MonoBehaviour:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
-  m_UIPosition: {x: 765, y: 1589}
+  m_UIPosition: {x: 684, y: 1884}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots:
@@ -6460,7 +6482,7 @@ MonoBehaviour:
     linkedSlots:
     - outputSlot: {fileID: 8926484042661615260}
       inputSlot: {fileID: 8926484042661615255}
-    position: {x: 622, y: 1747}
+    position: {x: 541, y: 2042}
     expandedSlots: []
     expanded: 0
 --- !u!114 &8926484042661615260

@@ -16,8 +16,8 @@ public class LinkMirror : MonoBehaviour
 
     private void Update()
     {
-        transform.localScale = linkedMirror.transform.localScale;
+        /*transform.localScale = linkedMirror.transform.localScale;
         transform.rotation = linkedMirror.transform.rotation;
-        transform.position = linkPosition + linkedMirror.transform.position - linkedMirrorPosition;
+        transform.position = linkPosition + linkedMirror.transform.position - linkedMirrorPosition;*/
     }
 }

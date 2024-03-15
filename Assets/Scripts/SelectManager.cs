@@ -18,11 +18,6 @@ public class Selection : MonoBehaviour
             {
                 hit.transform.GetComponentInParent<CastLaser>().StopLaser();
             }
-
-            if (hit.transform.CompareTag("DoubleMirror"))
-            {
-                hit.transform.GetComponentInParent<DoubleMirror>().ResetDoubleMirror();
-            }
         }
     }
 }
