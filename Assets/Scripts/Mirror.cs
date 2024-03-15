@@ -11,6 +11,8 @@ public class Mirror : MonoBehaviour
     [SerializeField] private GameObject activeLaser;
     [SerializeField] private float laserLength;
 
+    [SerializeField] private LayerMask layerMask;
+
     private void Awake()
     {
         laserManager = GameObject.Find("LaserManager").GetComponent<LaserManager>();
@@ -29,40 +31,50 @@ public class Mirror : MonoBehaviour
         Ray ray = new Ray(position, direction);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 100))
+        if (Physics.Raycast(ray, out hit, 100, layerMask))
         {
             laserLength = hit.distance / 2.0f;
 
             direction = Vector3.Reflect(direction, hit.normal);
             position = hit.point;
 
+            if(currentHit != null && currentHit != hit.transform.gameObject)
+            {
+                currentHit.GetComponent<Mirror>().StopLaser();
+            }
+
             currentHit = hit.transform.gameObject;
         }
         else
         {
+            if (currentHit != null)
+            {
+                currentHit.GetComponent<Mirror>().StopLaser();
+                currentHit = null;
+            }
             position += direction * 100;
-            if (currentHit != null) currentHit.GetComponent<Mirror>().StopLaser();
         }
 
         Debug.DrawLine(startingPosition, position, Color.blue);
 
-        activeLaser.transform.position = startingPosition;
-        activeLaser.transform.LookAt(position);
+        UpdateLaser(startingPosition, position);
 
-        if (currentHit != null) StartCoroutine(CastDelay(position, direction));
+        if (currentHit != null)
+        {
+            currentHit.GetComponent<Mirror>().CastMirrorLaser(position, direction);
+            currentHit.GetComponent<Mirror>().PlayLaser();
+        }
     }
 
-    IEnumerator CastDelay(Vector3 position, Vector3 direction)
+    private void UpdateLaser(Vector3 startingPosition, Vector3 position)
     {
-        yield return new WaitForSeconds(0.25f);
-
-        currentHit.GetComponent<Mirror>().CastMirrorLaser(position, direction);
-        currentHit.GetComponent<Mirror>().PlayLaser();
+        activeLaser.GetComponentInChildren<VisualEffect>().SetFloat("Length", currentHit == null ? 1 : laserLength);
+        activeLaser.transform.position = startingPosition;
+        activeLaser.transform.LookAt(position);
     }
 
     public void PlayLaser()
     {
-        activeLaser.GetComponentInChildren<VisualEffect>().SetFloat("Length", laserLength == 0 ? 1 : laserLength);
         activeLaser.SetActive(true);
     }
 

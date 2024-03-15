@@ -11,6 +11,8 @@ public class LaserSource : MonoBehaviour
     [SerializeField] private GameObject activeLaser;
     [SerializeField] private float laserLength;
 
+    [SerializeField] private LayerMask layerMask;
+
     private void Awake()
     {
         laserManager = GameObject.Find("LaserManager").GetComponent<LaserManager>();
@@ -34,7 +36,7 @@ public class LaserSource : MonoBehaviour
         Ray ray = new Ray(position, direction);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 100))
+        if (Physics.Raycast(ray, out hit, 100, layerMask))
         {
             laserLength = hit.distance / 2.0f;
 
@@ -45,6 +47,11 @@ public class LaserSource : MonoBehaviour
         }
         else
         {
+            if(currentHit != null)
+            {
+                currentHit.GetComponent<Mirror>().StopLaser();
+                currentHit = null;
+            }
             position += direction * 100;
         }
 
@@ -61,7 +68,7 @@ public class LaserSource : MonoBehaviour
 
     private void UpdateLaser(Vector3 startingPosition, Vector3 position)
     {
-        activeLaser.GetComponentInChildren<VisualEffect>().SetFloat("Length", laserLength == 0 ? 1 : laserLength);
+        activeLaser.GetComponentInChildren<VisualEffect>().SetFloat("Length", currentHit == null ? 1 : laserLength);
         activeLaser.transform.position = startingPosition;
         activeLaser.transform.LookAt(position);
     }
