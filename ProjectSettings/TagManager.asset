@@ -10,6 +10,7 @@ TagManager:
   - ReliefMirror
   - Portal
   - Border
+  - MultiMirror
   layers:
   - Default
   - TransparentFX

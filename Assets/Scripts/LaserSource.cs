@@ -54,6 +54,17 @@ public class LaserSource : MonoBehaviour
 
                 currentHit.GetComponent<Mirror>().PlayLaser();
             }
+            if (hit.transform.CompareTag("MultiMirror"))
+            {
+                if (currentHit != null && currentHit != hit.transform.gameObject)
+                {
+                    currentHit.GetComponent<MultiLaser>().StopMultiLaser();
+                }
+
+                currentHit = hit.transform.gameObject;
+
+                currentHit.GetComponent<MultiLaser>().PlayMultiLaser();
+            }
             if (hit.transform.CompareTag("Border"))
             {
                 if (currentHit != null && currentHit.transform.CompareTag("Mirror"))
@@ -65,23 +76,39 @@ public class LaserSource : MonoBehaviour
         }
         else
         {
-            if (currentHit != null && currentHit.transform.CompareTag("Mirror"))
+            if (currentHit != null)
             {
-                currentHit.GetComponent<Mirror>().StopLaser();
+                if (currentHit.transform.CompareTag("Mirror"))
+                {
+                    currentHit.GetComponent<Mirror>().StopLaser();
+                }
+                if (currentHit.transform.CompareTag("MultiMirror"))
+                {
+                    currentHit.GetComponent<MultiLaser>().StopMultiLaser();
 
+                }
+
+                currentHit = null;
             }
+
+            laserLength = 1f;
             position += direction * 100;
         }
 
         Debug.DrawLine(startingPosition, position, Color.blue);
 
-        activeLaser.GetComponentInChildren<VisualEffect>().SetFloat("Length", currentHit == null ? 1 : laserLength);
+        activeLaser.GetComponentInChildren<VisualEffect>().SetFloat("Length", laserLength);
         activeLaser.transform.position = startingPosition;
         activeLaser.transform.LookAt(position);
 
         if (currentHit != null && currentHit.transform.CompareTag("Mirror"))
         {
             currentHit.GetComponent<Mirror>().CastMirrorLaser(position, direction);
+        }
+
+        if (currentHit != null && currentHit.transform.CompareTag("MultiMirror"))
+        {
+            currentHit.GetComponent<MultiLaser>().CastMultiLaser();
         }
     }
 }
