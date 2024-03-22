@@ -12,11 +12,9 @@ public class Selection : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && !EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out hit))
         {
-            hit.transform.gameObject.GetComponentInParent<RotateManager>().RotateMirror();
-
-            if (hit.transform.CompareTag("Mirror"))
+            if (!hit.transform.CompareTag("Battery"))
             {
-                hit.transform.GetComponentInParent<CastLaser>().StopLaser();
+                hit.transform.gameObject.GetComponentInParent<RotateManager>().RotateMirror();
             }
         }
     }

@@ -1,42 +1,49 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.VFX;
 
 public class CastLaser : MonoBehaviour
 {
+    [SerializeField] private LaserManager laserManager;
+
+    [SerializeField] private GameObject currentHit;
+    [SerializeField] private GameObject activeLaser;
+
+    [SerializeField] private float laserLength;
+
     [SerializeField] private LayerMask layerMask;
-    [SerializeField] private GameObject laser;
-
-    public Color raycastColor;
-
-    private GameObject currentLaser;
-    private CastLaser currentHit;
-
-    private LinkMirror linkMirror;
-    private LinkMirror linkPortal;
-
-    private Vector3 startingPosition;
-
-    private float laserLength;
 
     private void Awake()
     {
-        currentLaser = Instantiate(laser);
+        laserManager = GameObject.Find("LaserManager").GetComponent<LaserManager>();
     }
 
-    void Update()
+    private void Start()
     {
+        activeLaser = laserManager.CreateLaser();
         if (transform.CompareTag("Source"))
         {
-            PlayLaser();
-            DrawRaycast(transform.position, transform.forward, this);
+            activeLaser.SetActive(true);
+        }
+        else
+        {
+            activeLaser.SetActive(false);
         }
     }
 
-    private void DrawRaycast(Vector3 position, Vector3 direction, CastLaser pastHit)
+    private void Update()
     {
-        startingPosition = position;
+        if (transform.CompareTag("Source"))
+        {
+            CastLaserRayCast(transform.position, transform.forward);
+        }
+    }
+
+    public void CastLaserRayCast(Vector3 position, Vector3 direction)
+    {
+        Vector3 startingPosition = position;
 
         Ray ray = new Ray(position, direction);
         RaycastHit hit;
@@ -48,69 +55,103 @@ public class CastLaser : MonoBehaviour
             direction = Vector3.Reflect(direction, hit.normal);
             position = hit.point;
 
-            if (hit.collider.transform.CompareTag("Mirror"))
-            {
-                if(hit.transform.GetComponent<CastLaser>() != currentHit)
-                {
-                    if (currentHit != null && pastHit != currentHit) 
-                    {
-                        currentHit.StopLaser();
-                    }
-                }
-                currentHit = hit.transform.GetComponent<CastLaser>();
-            }
-            if (hit.collider.transform.CompareTag("ReliefMirror"))
-            {
-                linkMirror = hit.transform.GetComponent<LinkMirror>();
-                currentHit = linkMirror.linkedMirror.GetComponent<CastLaser>();
-            }
-            if (hit.collider.transform.CompareTag("Portal"))
-            {
-                linkPortal = hit.transform.GetComponent<LinkMirror>();
-                currentHit = linkPortal.linkedMirror.GetComponent<CastLaser>();
-            }
+            StopAllLaser();
 
-            currentHit.transform.GetComponent<CastLaser>().PlayLaser();
+            if (hit.transform.CompareTag("Mirror"))
+            {
+                currentHit = hit.transform.gameObject;
+
+                currentHit.GetComponent<CastLaser>().PlayLaser();
+            }
+            else if (hit.transform.CompareTag("MultiMirror"))
+            {
+                currentHit = hit.transform.gameObject;
+
+                currentHit.GetComponent<MultiMirror>().PlayMultiLaser();
+            }
+            else if (hit.transform.CompareTag("Border"))
+            {
+                currentHit = null;
+            }
+            else if (hit.transform.CompareTag("Portal"))
+            {
+                currentHit = hit.transform.gameObject;
+
+                currentHit.GetComponent<PortalMirror>().PlayLinkedLaser();
+            }
+            else if (hit.transform.CompareTag("Battery"))
+            {
+                currentHit = hit.transform.gameObject;
+
+                currentHit.GetComponent<Battery>().ActiveBattery();
+            }
         }
         else
         {
-            position += direction * 100;
+            StopAllLaser();
 
-            if (currentHit != null) currentHit.StopLaser();
+            laserLength = 1f;
+            position += direction * 100;
         }
 
-        Debug.DrawLine(startingPosition, position, raycastColor);
+        Debug.DrawLine(startingPosition, position, Color.blue);
 
-        currentLaser.transform.position = startingPosition;
-        currentLaser.transform.LookAt(position);
+        activeLaser.GetComponentInChildren<VisualEffect>().SetFloat("Length", laserLength);
+        activeLaser.transform.position = startingPosition;
+        activeLaser.transform.LookAt(position);
 
-        if (currentHit != null && pastHit != currentHit)
+        if (currentHit != null && currentHit.transform.CompareTag("Mirror"))
         {
-            if (linkMirror != null)
-            {
-                currentHit.DrawRaycast(
-                    position + currentHit.transform.position - linkMirror.transform.position, direction, this);
-            }
-            if(linkPortal != null)
-            {
-                currentHit.DrawRaycast(
-                    position + currentHit.transform.position - linkPortal.transform.position, currentHit.transform.forward, this);
-            }
-            else 
-            {
-                currentHit.DrawRaycast(position, direction, this);
-            }
+            currentHit.GetComponent<CastLaser>().CastLaserRayCast(position, direction);
+        }
+
+        if (currentHit != null && currentHit.transform.CompareTag("MultiMirror"))
+        {
+            currentHit.GetComponent<MultiMirror>().CastMultiLaser();
+        }
+        if(currentHit != null && currentHit.transform.CompareTag("Portal"))
+        {
+            currentHit.GetComponent<PortalMirror>().CastLinkedLaser();
         }
     }
 
-    private void PlayLaser()
+    public void PlayLaser()
     {
-        currentLaser.GetComponentInChildren<VisualEffect>().SetFloat("Length", laserLength == 0 ? 1 : laserLength);
-        currentLaser.SetActive(true);
+        activeLaser.SetActive(true);
     }
 
     public void StopLaser()
     {
-        currentLaser.SetActive(false);
+        activeLaser.SetActive(false);
+        StopAllLaser();
+    }
+
+    public void StopAllLaser()
+    {
+        if (currentHit != null)
+        {
+            if (currentHit.transform.CompareTag("Mirror"))
+            {
+                currentHit.GetComponent<CastLaser>().StopLaser();
+            }
+            if (currentHit.transform.CompareTag("MultiMirror"))
+            {
+                currentHit.GetComponent<MultiMirror>().StopMultiLaser();
+
+            }
+            if (currentHit.transform.CompareTag("Portal"))
+            {
+                currentHit.GetComponent<PortalMirror>().StopLinkedLaser();
+            }
+            if (currentHit.transform.CompareTag("Battery"))
+            {
+                currentHit.GetComponent<Battery>().DesactiveBattery();
+            }
+            if (currentHit.transform.CompareTag("Border"))
+            {
+                currentHit.GetComponent<CastLaser>().StopLaser();
+            }
+            currentHit = null;
+        }
     }
 }

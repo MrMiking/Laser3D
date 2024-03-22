@@ -4,15 +4,15 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class MultiLaser : MonoBehaviour
+public class MultiMirror : MonoBehaviour
 {
-    public List<Transform> lasers;
+    [SerializeField] private List<Transform> lasers;
 
     public void PlayMultiLaser()
     {
         for (int i = 0; i < lasers.Count(); i++)
         {
-            lasers[i].GetComponent<Mirror>().PlayLaser();
+            lasers[i].GetComponent<CastLaser>().PlayLaser();
         }
     }
 
@@ -20,14 +20,14 @@ public class MultiLaser : MonoBehaviour
     {
         for (int i = 0; i < lasers.Count(); i++)
         {
-            lasers[i].GetComponent<Mirror>().StopLaser();
+            lasers[i].GetComponent<CastLaser>().StopLaser();
         }
     }
     public void CastMultiLaser()
     {
         for(int i = 0; i < lasers.Count(); i++)
         {
-            lasers[i].GetComponent<Mirror>().CastMirrorLaser(lasers[i].transform.position, lasers[i].transform.forward);
+            lasers[i].GetComponent<CastLaser>().CastLaserRayCast(lasers[i].transform.position, lasers[i].transform.forward);
         }
     }
 }
