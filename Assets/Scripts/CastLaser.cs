@@ -55,7 +55,10 @@ public class CastLaser : MonoBehaviour
             direction = Vector3.Reflect(direction, hit.normal);
             position = hit.point;
 
-            StopAllLaser();
+            if(currentHit != hit.transform.gameObject && currentHit != transform.gameObject) 
+            {
+                StopAllLaser();
+            }
 
             if (hit.transform.CompareTag("Mirror"))
             {
@@ -100,18 +103,21 @@ public class CastLaser : MonoBehaviour
         activeLaser.transform.position = startingPosition;
         activeLaser.transform.LookAt(position);
 
-        if (currentHit != null && currentHit.transform.CompareTag("Mirror"))
+        if(currentHit != null && currentHit != transform.gameObject)
         {
-            currentHit.GetComponent<CastLaser>().CastLaserRayCast(position, direction);
-        }
+            if (currentHit.transform.CompareTag("Mirror"))
+            {
+                currentHit.GetComponent<CastLaser>().CastLaserRayCast(position, direction);
+            }
 
-        if (currentHit != null && currentHit.transform.CompareTag("MultiMirror"))
-        {
-            currentHit.GetComponent<MultiMirror>().CastMultiLaser();
-        }
-        if(currentHit != null && currentHit.transform.CompareTag("Portal"))
-        {
-            currentHit.GetComponent<PortalMirror>().CastLinkedLaser();
+            if (currentHit.transform.CompareTag("MultiMirror"))
+            {
+                currentHit.GetComponent<MultiMirror>().CastMultiLaser();
+            }
+            if (currentHit.transform.CompareTag("Portal"))
+            {
+                currentHit.GetComponent<PortalMirror>().CastLinkedLaser();
+            }
         }
     }
 
