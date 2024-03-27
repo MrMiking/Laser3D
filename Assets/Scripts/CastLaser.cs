@@ -6,6 +6,7 @@ using UnityEngine.VFX;
 
 public class CastLaser : MonoBehaviour
 {
+    [Header("Private Variable")]
     [SerializeField] private LaserManager laserManager;
 
     [SerializeField] private GameObject currentHit;
@@ -18,6 +19,7 @@ public class CastLaser : MonoBehaviour
     private void Awake()
     {
         laserManager = GameObject.Find("LaserManager").GetComponent<LaserManager>();
+        layerMask = LayerMask.GetMask("Default", "Border");
     }
 
     private void Start()
