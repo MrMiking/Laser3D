@@ -55,7 +55,7 @@ public class CastLaser : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 100, layerMask))
         {
-            laserLength = hit.distance / 2.0f;
+            laserLength = hit.distance;
 
             direction = Vector3.Reflect(direction, hit.normal);
             position = hit.point;
@@ -102,7 +102,7 @@ public class CastLaser : MonoBehaviour
         {
             StopAllLaser();
 
-            laserLength = 1f;
+            laserLength = 2f;
             position += direction * 100;
         }
 
@@ -125,7 +125,7 @@ public class CastLaser : MonoBehaviour
             }
             if (currentHit.transform.CompareTag("Portal"))
             {
-                currentHit.GetComponent<PortalMirror>().CastLinkedLaser();
+                currentHit.GetComponent<PortalMirror>().CastLinkedLaser(-direction);
             }
         }
     }
