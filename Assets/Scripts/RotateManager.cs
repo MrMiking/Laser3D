@@ -12,7 +12,7 @@ public class RotateManager : MonoBehaviour
     {
         if(!rotating)
         {
-            StartCoroutine(Rotate(new Vector3(rotationAxys == 'y' ? 90f : 0f, rotationAxys == 'x' ? 90f : 0f, rotationAxys == 'z' ? 90f : 0f), 0.25f));
+            StartCoroutine(Rotate(new Vector3(rotationAxys == 'y' ? 90f : 0f, rotationAxys == 'x' ? 90f : 0f, rotationAxys == 'z' ? 90f : 0f), 0.2f));
         }
     }
 
