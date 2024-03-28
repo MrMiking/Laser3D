@@ -16,6 +16,9 @@ public class CastLaser : MonoBehaviour
 
     [SerializeField] private LayerMask layerMask;
 
+    [Header("Public Variable")]
+    public bool isActive = false;
+
     private void Awake()
     {
         laserManager = GameObject.Find("LaserManager").GetComponent<LaserManager>();
@@ -27,11 +30,11 @@ public class CastLaser : MonoBehaviour
         activeLaser = laserManager.CreateLaser();
         if (transform.CompareTag("Source"))
         {
-            activeLaser.SetActive(true);
+            PlayLaser();
         }
         else
         {
-            activeLaser.SetActive(false);
+            StopLaser();
         }
     }
 
@@ -57,38 +60,42 @@ public class CastLaser : MonoBehaviour
             direction = Vector3.Reflect(direction, hit.normal);
             position = hit.point;
 
-            if(currentHit != hit.transform.gameObject && currentHit != transform.gameObject) 
+            print(hit.transform.gameObject + " is active = " + IsActive(hit.transform.gameObject));
+
+            if (currentHit != hit.transform.gameObject)
             {
                 StopAllLaser();
             }
-
-            if (hit.transform.CompareTag("Mirror"))
+            if(!IsActive(hit.transform.gameObject))
             {
-                currentHit = hit.transform.gameObject;
+                if (hit.transform.CompareTag("Mirror"))
+                {
+                    currentHit = hit.transform.gameObject;
 
-                currentHit.GetComponent<CastLaser>().PlayLaser();
-            }
-            else if (hit.transform.CompareTag("MultiMirror"))
-            {
-                currentHit = hit.transform.gameObject;
+                    currentHit.GetComponent<CastLaser>().PlayLaser();
+                }
+                else if (hit.transform.CompareTag("MultiMirror"))
+                {
+                    currentHit = hit.transform.gameObject;
 
-                currentHit.GetComponent<MultiMirror>().PlayMultiLaser();
-            }
-            else if (hit.transform.CompareTag("Border"))
-            {
-                currentHit = null;
-            }
-            else if (hit.transform.CompareTag("Portal"))
-            {
-                currentHit = hit.transform.gameObject;
+                    currentHit.GetComponent<MultiMirror>().PlayMultiLaser();
+                }
+                else if (hit.transform.CompareTag("Border"))
+                {
+                    currentHit = null;
+                }
+                else if (hit.transform.CompareTag("Portal"))
+                {
+                    currentHit = hit.transform.gameObject;
 
-                currentHit.GetComponent<PortalMirror>().PlayLinkedLaser();
-            }
-            else if (hit.transform.CompareTag("Battery"))
-            {
-                currentHit = hit.transform.gameObject;
+                    currentHit.GetComponent<PortalMirror>().PlayLinkedLaser();
+                }
+                else if (hit.transform.CompareTag("Battery"))
+                {
+                    currentHit = hit.transform.gameObject;
 
-                currentHit.GetComponent<Battery>().ActiveBattery();
+                    currentHit.GetComponent<Battery>().ActiveBattery();
+                }
             }
         }
         else
@@ -105,7 +112,7 @@ public class CastLaser : MonoBehaviour
         activeLaser.transform.position = startingPosition;
         activeLaser.transform.LookAt(position);
 
-        if(currentHit != null && currentHit != transform.gameObject)
+        if(currentHit != null)
         {
             if (currentHit.transform.CompareTag("Mirror"))
             {
@@ -123,14 +130,45 @@ public class CastLaser : MonoBehaviour
         }
     }
 
+    public bool IsActive(GameObject hit)
+    {
+        if (hit != null)
+        {
+            if (hit.transform.CompareTag("Mirror"))
+            {
+                if (hit.GetComponent<CastLaser>().isActive)
+                {
+                    return true;
+                }
+            }
+            if (hit.transform.CompareTag("MultiMirror"))
+            {
+                if (hit.GetComponent<MultiMirror>().IsActive())
+                {
+                    return true;
+                }
+            }
+            if (hit.transform.CompareTag("Portal"))
+            {
+                if (hit.GetComponent<PortalMirror>().IsActive())
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public void PlayLaser()
     {
         activeLaser.SetActive(true);
+        isActive = true;
     }
 
     public void StopLaser()
     {
         activeLaser.SetActive(false);
+        isActive = false;
         StopAllLaser();
     }
 

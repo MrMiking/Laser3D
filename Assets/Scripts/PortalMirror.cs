@@ -18,4 +18,9 @@ public class PortalMirror : MonoBehaviour
     {
         linkedPortal.GetComponent<CastLaser>().CastLaserRayCast(linkedPortal.position, linkedPortal.forward);
     }
+
+    public bool IsActive()
+    {
+        return linkedPortal.GetComponent<CastLaser>().isActive;
+    }
 }

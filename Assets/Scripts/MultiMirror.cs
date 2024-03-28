@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -29,5 +30,9 @@ public class MultiMirror : MonoBehaviour
         {
             lasers[i].GetComponent<CastLaser>().CastLaserRayCast(lasers[i].transform.position, lasers[i].transform.forward);
         }
+    }
+    public bool IsActive()
+    {
+        return lasers[0].GetComponent<CastLaser>().isActive;
     }
 }
