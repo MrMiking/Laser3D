@@ -566,6 +566,11 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2128634547372533561, guid: 73fbdf8e8aa62b843aa2748997d19e04,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6021783717343053617, guid: 73fbdf8e8aa62b843aa2748997d19e04,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -574,7 +579,7 @@ PrefabInstance:
     - target: {fileID: 6021783717343053617, guid: 73fbdf8e8aa62b843aa2748997d19e04,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.07
+      value: 2.2300003
       objectReference: {fileID: 0}
     - target: {fileID: 6021783717343053617, guid: 73fbdf8e8aa62b843aa2748997d19e04,
         type: 3}
@@ -616,10 +621,35 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 6414038013035133774, guid: 73fbdf8e8aa62b843aa2748997d19e04,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7531107293636667700, guid: 73fbdf8e8aa62b843aa2748997d19e04,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8067213699120140682, guid: 73fbdf8e8aa62b843aa2748997d19e04,
         type: 3}
       propertyPath: m_Name
       value: Battery (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8317468993213806467, guid: 73fbdf8e8aa62b843aa2748997d19e04,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8631576143481904161, guid: 73fbdf8e8aa62b843aa2748997d19e04,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9112604077587960231, guid: 73fbdf8e8aa62b843aa2748997d19e04,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -761,6 +791,11 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2128634547372533561, guid: 73fbdf8e8aa62b843aa2748997d19e04,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6021783717343053617, guid: 73fbdf8e8aa62b843aa2748997d19e04,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -769,7 +804,7 @@ PrefabInstance:
     - target: {fileID: 6021783717343053617, guid: 73fbdf8e8aa62b843aa2748997d19e04,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.0799997
+      value: 2.24
       objectReference: {fileID: 0}
     - target: {fileID: 6021783717343053617, guid: 73fbdf8e8aa62b843aa2748997d19e04,
         type: 3}
@@ -811,10 +846,35 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 6414038013035133774, guid: 73fbdf8e8aa62b843aa2748997d19e04,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7531107293636667700, guid: 73fbdf8e8aa62b843aa2748997d19e04,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8067213699120140682, guid: 73fbdf8e8aa62b843aa2748997d19e04,
         type: 3}
       propertyPath: m_Name
       value: Battery
+      objectReference: {fileID: 0}
+    - target: {fileID: 8317468993213806467, guid: 73fbdf8e8aa62b843aa2748997d19e04,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8631576143481904161, guid: 73fbdf8e8aa62b843aa2748997d19e04,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9112604077587960231, guid: 73fbdf8e8aa62b843aa2748997d19e04,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

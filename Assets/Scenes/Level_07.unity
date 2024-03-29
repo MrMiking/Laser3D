@@ -728,6 +728,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Source (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8101844179324190965, guid: 5660b44cfef8c1a40acd7a965190a9ff,
+        type: 3}
+      propertyPath: rotationAxys
+      value: 120
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
