@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class BatteryManager : MonoBehaviour
+public class LevelManager : MonoBehaviour
 {
+    [SerializeField] private int batteryToActivate;
+
     [SerializeField] private int activatedBattery;
     [SerializeField] private HUDManager hudManager;
 
@@ -15,7 +18,10 @@ public class BatteryManager : MonoBehaviour
 
     private void Update()
     {
-        hudManager.UpdateBatteryText(activatedBattery);
+        if(activatedBattery >= batteryToActivate)
+        {
+            StartCoroutine(NextLevelAnimation());
+        }
     }
 
     public void AddBattery()
@@ -25,5 +31,16 @@ public class BatteryManager : MonoBehaviour
     public void RemoveBattery()
     {
         if (activatedBattery > 0) activatedBattery -= 1;
+    }
+
+    public void NextLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    IEnumerator NextLevelAnimation()
+    {
+        yield return new WaitForSeconds(.5f);
+        hudManager.OpenNextLevelPanel();
     }
 }

@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class Battery : MonoBehaviour
 {
-    [SerializeField] private BatteryManager batteryManager;
+    [SerializeField] private LevelManager levelManager;
 
     [SerializeField] bool isActivated;
 
     private void Awake()
     {
-        batteryManager = GameObject.Find("BatteryManager").GetComponent<BatteryManager>();
+        levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
     }
 
     public void ActiveBattery()
@@ -16,7 +16,7 @@ public class Battery : MonoBehaviour
         if (!isActivated)
         {
             isActivated = true;
-            batteryManager.AddBattery();
+            levelManager.AddBattery();
         }
     }
 
@@ -25,7 +25,7 @@ public class Battery : MonoBehaviour
         if (isActivated)
         {
             isActivated = false;
-            batteryManager.RemoveBattery();
+            levelManager.RemoveBattery();
         }
     }
 }

@@ -4,9 +4,10 @@ using UnityEngine;
 public class HUDManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text batteriesNumber;
+    [SerializeField] private GameObject nexLevelPanel;
 
-    public void UpdateBatteryText(int quantity)
+    public void OpenNextLevelPanel()
     {
-        batteriesNumber.text = $"Battery : {quantity}";
+        nexLevelPanel.SetActive(true);
     }
 }
