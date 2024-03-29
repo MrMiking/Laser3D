@@ -125,7 +125,7 @@ public class CastLaser : MonoBehaviour
             }
             if (currentHit.transform.CompareTag("Portal"))
             {
-                currentHit.GetComponent<PortalMirror>().CastLinkedLaser(-direction);
+                currentHit.GetComponent<PortalMirror>().CastLinkedLaser();
             }
         }
     }
