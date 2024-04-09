@@ -42,7 +42,7 @@ public class CastLaser : MonoBehaviour
     {
         if (transform.CompareTag("Source"))
         {
-            CastLaserRayCast(transform.position, transform.forward);
+            CastLaserRayCast(transform.position , transform.forward * 0.75f);
         }
     }
 
@@ -55,7 +55,7 @@ public class CastLaser : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 100, layerMask))
         {
-            laserLength = hit.distance;
+            laserLength = hit.distance / 2;
 
             direction = Vector3.Reflect(direction, hit.normal);
             position = hit.point;

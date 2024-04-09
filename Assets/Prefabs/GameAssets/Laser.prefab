@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1700997521463055722}
   - component: {fileID: 4596196112151680682}
   - component: {fileID: 7512348032169180060}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: VfxGraph
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,10 +51,10 @@ VisualEffect:
   m_PropertySheet:
     m_Float:
       m_Array:
-      - m_Value: 0.5
+      - m_Value: 1
         m_Name: Size
         m_Overridden: 1
-      - m_Value: 3
+      - m_Value: 1.5
         m_Name: Length
         m_Overridden: 1
       - m_Value: 3
@@ -132,7 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1795761906238455271}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
