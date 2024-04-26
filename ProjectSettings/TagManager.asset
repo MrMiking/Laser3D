@@ -7,7 +7,6 @@ TagManager:
   - Source
   - Mirror
   - DoubleMirror
-  - ReliefMirror
   - Portal
   - Border
   - MultiMirror

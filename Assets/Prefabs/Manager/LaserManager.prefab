@@ -44,5 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02238a4d4ab713b4c9097f634b582546, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserTrailRender: {fileID: 7339586448324029072, guid: ba745bd27ed5d7345a2db360b55c0861,
+  laserTrailRender: {fileID: 7339586448324029072, guid: 4776052f52d6a4942aa767c41aef1814,
     type: 3}
