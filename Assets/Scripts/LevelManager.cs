@@ -9,24 +9,14 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private int batteryToActivate;
 
     [SerializeField] private int activatedBattery;
-    [SerializeField] private HUDManager hudManager;
-
-    private void Awake()
-    {
-        hudManager = GameObject.Find("HUDManager").GetComponent<HUDManager>();
-    }
-
-    private void Update()
-    {
-        if(activatedBattery >= batteryToActivate)
-        {
-            StartCoroutine(NextLevelAnimation());
-        }
-    }
 
     public void AddBattery()
     {
         activatedBattery += 1;
+        if (activatedBattery >= batteryToActivate)
+        {
+            NextLevel();
+        }
     }
     public void RemoveBattery()
     {
@@ -36,11 +26,5 @@ public class LevelManager : MonoBehaviour
     public void NextLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    }
-
-    IEnumerator NextLevelAnimation()
-    {
-        yield return new WaitForSeconds(.5f);
-        hudManager.OpenNextLevelPanel();
     }
 }

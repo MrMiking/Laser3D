@@ -8,7 +8,7 @@ public class Battery : MonoBehaviour
 
     private void Awake()
     {
-        levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        levelManager = GameObject.Find("SceneManager").GetComponent<LevelManager>();
     }
 
     public void ActiveBattery()
