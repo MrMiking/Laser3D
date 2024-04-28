@@ -6,22 +6,20 @@ using UnityEngine.VFX;
 
 public class CastLaser : MonoBehaviour
 {
-    [Header("Private Variable")]
-    [SerializeField] private LaserManager laserManager;
+    private LaserManager laserManager;
 
-    [SerializeField] private GameObject currentHit;
-    [SerializeField] private GameObject activeLaser;
+    private GameObject currentHit;
+    private GameObject activeLaser;
 
-    [SerializeField] private float laserLength;
+    private float laserLength;
 
-    [SerializeField] private LayerMask layerMask;
+    private LayerMask layerMask;
 
-    [Header("Public Variable")]
     public bool isActive = false;
 
     private void Awake()
     {
-        laserManager = GameObject.Find("LaserManager").GetComponent<LaserManager>();
+        laserManager = GameObject.Find("SceneManager").GetComponent<LaserManager>();
         layerMask = LayerMask.GetMask("Default", "Border");
     }
 
@@ -42,7 +40,7 @@ public class CastLaser : MonoBehaviour
     {
         if (transform.CompareTag("Source"))
         {
-            CastLaserRayCast(transform.position , transform.forward * 0.75f);
+            CastLaserRayCast(transform.position + transform.forward * 0.5f , transform.forward * 0.75f);
         }
     }
 
@@ -108,9 +106,11 @@ public class CastLaser : MonoBehaviour
 
         Debug.DrawLine(startingPosition, position, Color.blue);
 
-        activeLaser.GetComponentInChildren<VisualEffect>().SetFloat("Length", laserLength);
-        activeLaser.transform.position = startingPosition;
         activeLaser.transform.LookAt(position);
+        activeLaser.transform.position = startingPosition;
+
+        activeLaser.GetComponentInChildren<LineRenderer>().SetPosition(0, startingPosition);
+        activeLaser.GetComponentInChildren<LineRenderer>().SetPosition(1, position);
 
         if(currentHit != null)
         {

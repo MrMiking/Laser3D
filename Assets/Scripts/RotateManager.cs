@@ -1,6 +1,4 @@
-using NUnit.Framework;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RotateManager : MonoBehaviour
@@ -8,7 +6,7 @@ public class RotateManager : MonoBehaviour
     [SerializeField] private char rotationAxys;
 
     private bool rotating = false;
-    public void RotateMirror()
+    public void RotateObject()
     {
         if(!rotating)
         {

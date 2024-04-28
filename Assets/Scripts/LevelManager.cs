@@ -8,7 +8,7 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField] private int batteryToActivate;
 
-    [SerializeField] private int activatedBattery;
+    private int activatedBattery;
 
     public void AddBattery()
     {

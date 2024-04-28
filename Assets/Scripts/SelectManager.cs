@@ -2,21 +2,19 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class Selection : MonoBehaviour
-{
-    private RaycastHit hit;
+{   
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            print("hello");
-
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
 
             if (!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out hit))
             {
-                if (hit.transform.gameObject.layer == 3)
+                if(hit.transform.gameObject.GetComponentInParent<RotateManager>() != null)
                 {
-                    hit.transform.gameObject.GetComponentInParent<RotateManager>().RotateMirror();
+                    hit.transform.gameObject.GetComponentInParent<RotateManager>().RotateObject();
                 }
             }
         }
