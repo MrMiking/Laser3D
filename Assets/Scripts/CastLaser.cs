@@ -11,8 +11,6 @@ public class CastLaser : MonoBehaviour
     private GameObject currentHit;
     private GameObject activeLaser;
 
-    private float laserLength;
-
     private LayerMask layerMask;
 
     public bool isActive = false;
@@ -53,8 +51,6 @@ public class CastLaser : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 100, layerMask))
         {
-            laserLength = hit.distance / 2;
-
             direction = Vector3.Reflect(direction, hit.normal);
             position = hit.point;
 
@@ -99,12 +95,12 @@ public class CastLaser : MonoBehaviour
         else
         {
             StopAllLaser();
-
-            laserLength = 2f;
             position += direction * 100;
         }
 
         Debug.DrawLine(startingPosition, position, Color.blue);
+
+        activeLaser.transform.Find("EndVFX").position = position;
 
         activeLaser.transform.LookAt(position);
         activeLaser.transform.position = startingPosition;
