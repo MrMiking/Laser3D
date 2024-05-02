@@ -26,6 +26,7 @@ public class CastLaser : MonoBehaviour
         activeLaser = laserManager.CreateLaser();
         if (transform.CompareTag("Source"))
         {
+            Application.targetFrameRate = 60;
             PlayLaser();
         }
         else
