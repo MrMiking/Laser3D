@@ -55,8 +55,6 @@ public class CastLaser : MonoBehaviour
             direction = Vector3.Reflect(direction, hit.normal);
             position = hit.point;
 
-            print(hit.transform.gameObject + " is active = " + IsActive(hit.transform.gameObject));
-
             if (currentHit != hit.transform.gameObject)
             {
                 StopAllLaser();
