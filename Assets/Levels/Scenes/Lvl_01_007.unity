@@ -164,6 +164,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   batteryToActivate: 2
+  levelCamera: {fileID: 0}
+  gameData: {fileID: 0}
 --- !u!114 &68259029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -645,7 +647,7 @@ Camera:
   far clip plane: 1000
   field of view: 90
   orthographic: 1
-  orthographic size: 8
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
