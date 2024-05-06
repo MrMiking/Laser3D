@@ -907,7 +907,7 @@ Transform:
   m_GameObject: {fileID: 850649916}
   serializedVersion: 2
   m_LocalRotation: {x: 0.27984518, y: 0.3647056, z: -0.11591566, w: 0.88047725}
-  m_LocalPosition: {x: -4.54, y: 6, z: -4.54}
+  m_LocalPosition: {x: -4.54, y: 9, z: -4.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1000,7 +1000,7 @@ Camera:
   far clip plane: 1000
   field of view: 90
   orthographic: 1
-  orthographic size: 8
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1862,9 +1862,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2029cd4d15f9fe240be8f94ab97f4081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 55
 --- !u!114 &2113221796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1878,7 +1875,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   batteryToActivate: 1
-  activatedBattery: 0
+  levelCamera: {fileID: 0}
+  gameData: {fileID: 0}
 --- !u!114 &2113221797
 MonoBehaviour:
   m_ObjectHideFlags: 0
