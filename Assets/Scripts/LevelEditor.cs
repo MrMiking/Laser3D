@@ -1,15 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEditor;
-using System.Linq;
-using Unity.VisualScripting;
-using static UnityEditor.Experimental.GraphView.GraphView;
+using UnityEditor.SceneManagement;
+using UnityEngine;
 
 public class LevelEditor : EditorWindow
 {
+    [SerializeField] private GameData gameData;
+
     public string sceneName;
-    public GameData gameData;
 
     private List<string> levelNameList;
 
@@ -23,11 +21,24 @@ public class LevelEditor : EditorWindow
 
     private void OnGUI()
     {
-        foreach (LevelData p in gameData.levelsList)
+        gameData = (GameData)EditorGUILayout.ObjectField(gameData, typeof(GameData), true);
+        
+        if(gameData != null)
         {
-            levelNameList.Add("World " + p.name);
+            Debug.Log(gameData.levelsList[0].name);
+            foreach (LevelData p in gameData.levelsList)
+            {
+                levelNameList.Add("World " + p.name[4] + p.name[5] + " : Level " + p.name[7] + p.name[8] + p.name[9]);
+            }
+            levelIndex = EditorGUILayout.Popup(levelIndex, levelNameList.ToArray());
+            gameData.levelsList[levelIndex].backgroundColor = EditorGUILayout.ColorField("Background Color", gameData.levelsList[levelIndex].backgroundColor);
+            gameData.levelsList[levelIndex].cameraZoom = EditorGUILayout.IntField("Camera Zoom", gameData.levelsList[levelIndex].cameraZoom);
+
+            if (GUILayout.Button("Open Scene"))
+            {
+                EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene());
+                EditorSceneManager.OpenScene("Assets/Scenes/" + gameData.levelsList[levelIndex].name + ".unity");
+            }
         }
-        levelIndex = EditorGUILayout.Popup(levelIndex, levelNameList.ToArray());
-        gameData.levelsList[levelIndex].backgroundColor = EditorGUILayout.ColorField("Background Color", gameData.levelsList[levelIndex].backgroundColor);
     }
 }

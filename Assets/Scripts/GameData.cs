@@ -5,5 +5,5 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "GameData")]
 public class GameData : ScriptableObject
 {
-    public List<LevelData> levelsList;
+    public LevelData[] levelsList;
 }

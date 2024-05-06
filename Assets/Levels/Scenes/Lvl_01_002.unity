@@ -448,6 +448,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   batteryToActivate: 1
+  levelCamera: {fileID: 767321475}
+  gameData: {fileID: 11400000, guid: 8fb7dfcc56a24ed4c9be5bcbb1d56627, type: 2}
 --- !u!114 &1119567242
 MonoBehaviour:
   m_ObjectHideFlags: 0
