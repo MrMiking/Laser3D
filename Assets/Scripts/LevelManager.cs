@@ -25,7 +25,7 @@ public class LevelManager : MonoBehaviour
     {
         for (int i = 0; i < gameData.levelsList.Count(); i++)
         {
-            if (gameData.levelsList[i].levelName == SceneManager.GetActiveScene().name)
+            if (gameData.levelsList[i].sceneName == SceneManager.GetActiveScene().name)
             {
                 return gameData.levelsList[i];
             }

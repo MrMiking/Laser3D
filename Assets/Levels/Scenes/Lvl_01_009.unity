@@ -265,7 +265,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.0754717, g: 0.0754717, b: 0.0754717, a: 0}
+  m_BackGroundColor: {r: 1, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -597,8 +597,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   batteryToActivate: 1
-  levelCamera: {fileID: 0}
-  gameData: {fileID: 0}
+  levelCamera: {fileID: 295544899}
+  gameData: {fileID: 11400000, guid: 8fb7dfcc56a24ed4c9be5bcbb1d56627, type: 2}
 --- !u!114 &1041756059
 MonoBehaviour:
   m_ObjectHideFlags: 0
