@@ -13,6 +13,8 @@ public class CastLaser : MonoBehaviour
 
     private LayerMask layerMask;
 
+    private float laserLength;
+
     public bool isActive = false;
 
     private void Awake()
@@ -39,7 +41,7 @@ public class CastLaser : MonoBehaviour
     {
         if (transform.CompareTag("Source"))
         {
-            CastLaserRayCast(transform.position + transform.forward * 0.5f , transform.forward * 0.75f);
+            CastLaserRayCast(transform.position, transform.forward * 0.75f);
         }
     }
 
@@ -52,6 +54,8 @@ public class CastLaser : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 100, layerMask))
         {
+            laserLength = hit.distance;
+
             direction = Vector3.Reflect(direction, hit.normal);
             position = hit.point;
 
@@ -95,17 +99,16 @@ public class CastLaser : MonoBehaviour
         {
             StopAllLaser();
             position += direction * 100;
+            laserLength = 2f;
         }
 
-        Debug.DrawLine(startingPosition, position, Color.blue);
-
-        activeLaser.transform.Find("EndVFX").position = position;
+        activeLaser.transform.Find("EndVFX").position = activeLaser.transform.position + activeLaser.transform.forward * laserLength;
 
         activeLaser.transform.LookAt(position);
         activeLaser.transform.position = startingPosition;
 
         activeLaser.GetComponentInChildren<LineRenderer>().SetPosition(0, startingPosition);
-        activeLaser.GetComponentInChildren<LineRenderer>().SetPosition(1, position);
+        activeLaser.GetComponentInChildren<LineRenderer>().SetPosition(1, activeLaser.transform.position + activeLaser.transform.forward * laserLength);
 
         if(currentHit != null)
         {
