@@ -43,7 +43,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6032494541639827724}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -5495902117074765545, guid: c75f25f9ec39dcb4eba23bf4e11fddd1, type: 3}
 --- !u!23 &2660240080473611856
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -111,13 +111,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1f482fbd52b8be4793a81ddd29b5274, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserManager: {fileID: 0}
-  currentHit: {fileID: 0}
-  activeLaser: {fileID: 0}
-  laserLength: 0
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 0
   isActive: 0
 --- !u!1 &6753162019347945145
 GameObject:
