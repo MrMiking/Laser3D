@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 773972651580998197}
   serializedVersion: 2
   m_LocalRotation: {x: 0.65328145, y: 0.27059805, z: -0.65328145, w: 0.27059805}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.01, y: -0.01, z: 0}
   m_LocalScale: {x: 5, y: 0.010000003, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -45,13 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1f482fbd52b8be4793a81ddd29b5274, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserManager: {fileID: 0}
-  currentHit: {fileID: 0}
-  activeLaser: {fileID: 0}
-  laserLength: 0
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 0
   isActive: 0
 --- !u!65 &5919899419611479651
 BoxCollider:
@@ -237,7 +230,7 @@ Transform:
   m_GameObject: {fileID: 7018865085695547567}
   serializedVersion: 2
   m_LocalRotation: {x: 0.65328145, y: 0.27059805, z: -0.65328145, w: 0.27059805}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.01, y: 0.01, z: 0}
   m_LocalScale: {x: 5, y: 0.010000003, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -255,13 +248,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1f482fbd52b8be4793a81ddd29b5274, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserManager: {fileID: 0}
-  currentHit: {fileID: 0}
-  activeLaser: {fileID: 0}
-  laserLength: 0
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 0
   isActive: 0
 --- !u!65 &6008056532362718954
 BoxCollider:

@@ -21,6 +21,11 @@ public class LevelManager : MonoBehaviour
         levelCamera.orthographicSize = GetCurrentLevel().cameraZoom;
     }
 
+    private void Start()
+    {
+        StartCoroutine(StartLevel());
+    }
+
     public LevelData GetCurrentLevel()
     {
         for (int i = 0; i < gameData.levelsList.Count(); i++)
@@ -60,10 +65,26 @@ public class LevelManager : MonoBehaviour
         if (activatedBattery > 0) activatedBattery -= 1;
     }
 
+    IEnumerator StartLevel()
+    {
+        levelCamera.transform.position = new Vector3(-14, 9, 6);
+
+        Vector3 startPosition = levelCamera.transform.position;
+        Vector3 endPosition = new Vector3(-4, levelCamera.transform.position.y, -4);
+        for (float t = 0; t < 0.5f; t += Time.deltaTime)
+        {
+            levelCamera.transform.position = Vector3.Lerp(startPosition, endPosition, t / 0.5f);
+            yield return null;
+        }
+        levelCamera.transform.position = endPosition;
+
+        yield return new WaitForSeconds(0.5f);
+    }
+
     IEnumerator NextLevel()
     {
         Vector3 startPosition = levelCamera.transform.position;
-        Vector3 endPosition = new Vector3(levelCamera.transform.position.x + 10, levelCamera.transform.position.y, levelCamera.transform.position.z - 10);
+        Vector3 endPosition = new Vector3(6, 9, -14);
         for (float t = 0; t < 0.5f; t += Time.deltaTime)
         {
             levelCamera.transform.position = Vector3.Lerp(startPosition, endPosition, t / 0.5f);
