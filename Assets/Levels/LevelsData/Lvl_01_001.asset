@@ -15,4 +15,4 @@ MonoBehaviour:
   sceneName: Lvl_01_001
   backgroundColor: {r: 0, g: 0, b: 0, a: 1}
   cameraZoom: 10
-  completed: 0
+  completed: 1

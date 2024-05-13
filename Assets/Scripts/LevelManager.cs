@@ -5,7 +5,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
-
 [ExecuteInEditMode]
 public class LevelManager : MonoBehaviour
 {
@@ -15,15 +14,15 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField] private Camera levelCamera;
     public GameData gameData;
-    private void Update()
-    {
-        levelCamera.backgroundColor = GetCurrentLevel().backgroundColor;
-        levelCamera.orthographicSize = GetCurrentLevel().cameraZoom;
-    }
 
     private void Start()
     {
         StartCoroutine(StartLevel());
+    }
+    private void Update()
+    {
+        levelCamera.backgroundColor = GetCurrentLevel().backgroundColor;
+        levelCamera.orthographicSize = GetCurrentLevel().cameraZoom;
     }
 
     public LevelData GetCurrentLevel()
@@ -91,6 +90,8 @@ public class LevelManager : MonoBehaviour
             yield return null;
         }
         levelCamera.transform.position = endPosition;
+
+        gameData.levelsList[GetCurrentLevelIndex() + 1].completed = true;
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 
