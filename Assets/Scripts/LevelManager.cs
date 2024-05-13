@@ -14,7 +14,7 @@ public class LevelManager : MonoBehaviour
     private int activatedBattery;
 
     [SerializeField] private Camera levelCamera;
-    [SerializeField] private GameData gameData;
+    public GameData gameData;
     private void Update()
     {
         levelCamera.backgroundColor = GetCurrentLevel().backgroundColor;
@@ -34,20 +34,45 @@ public class LevelManager : MonoBehaviour
         return gameData.levelsList[0];
     }
 
+    public int GetCurrentLevelIndex()
+    {
+        for (int i = 0; i < gameData.levelsList.Count(); i++)
+        {
+            if (gameData.levelsList[i].sceneName == SceneManager.GetActiveScene().name)
+            {
+                return i;
+            }
+        }
+        Debug.Log("Scene Index Not Found");
+        return 0;
+    }
+
     public void AddBattery()
     {
         activatedBattery += 1;
         if (activatedBattery >= batteryToActivate)
         {
-            NextLevel();
+            StartCoroutine(NextLevel());
         }
     }
     public void RemoveBattery()
     {
         if (activatedBattery > 0) activatedBattery -= 1;
     }
-    public void NextLevel()
+
+    IEnumerator NextLevel()
     {
+        Vector3 startPosition = levelCamera.transform.position;
+        Vector3 endPosition = new Vector3(levelCamera.transform.position.x + 10, levelCamera.transform.position.y, levelCamera.transform.position.z - 10);
+        for (float t = 0; t < 0.5f; t += Time.deltaTime)
+        {
+            levelCamera.transform.position = Vector3.Lerp(startPosition, endPosition, t / 0.5f);
+            yield return null;
+        }
+        levelCamera.transform.position = endPosition;
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
+        yield return new WaitForSeconds(0.5f);
     }
 }

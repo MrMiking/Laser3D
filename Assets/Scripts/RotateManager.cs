@@ -28,20 +28,4 @@ public class RotateManager : MonoBehaviour
         transform.rotation = endRotation;
         rotating = false;
     }
-
-    private void EnabledLaserScript(bool state)
-    {
-        if (transform.CompareTag("Mirror") || transform.CompareTag("Source"))
-        {
-            GetComponent<CastLaser>().enabled = state;
-        }
-        if (transform.CompareTag("MultiMirror"))
-        {
-            GetComponent<MultiMirror>().enabled = state;
-        }
-        if (transform.CompareTag("Portal"))
-        {
-            GetComponent<PortalMirror>().enabled = state;
-        }
-    }
 }
